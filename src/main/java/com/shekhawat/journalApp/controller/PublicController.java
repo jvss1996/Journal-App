@@ -18,11 +18,6 @@ public class PublicController {
         return "Ok";
     }
 
-    @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userService.getAll();
-    }
-
     @PostMapping("/create-user")
     public void createUser(@RequestBody User user) {
         userService.saveNewUser(user);

@@ -33,6 +33,16 @@ public class UserService {
         }
     }
 
+    public void saveAdminUser(User user) {
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList("USER", "ADMIN"));
+            userRepository.save(user);
+        } catch (Exception ex) {
+            log.error("Exception: ", ex);
+        }
+    }
+
     public void saveUser(User user) {
         userRepository.save(user);
     }
