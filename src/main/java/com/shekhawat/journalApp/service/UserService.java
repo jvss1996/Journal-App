@@ -23,7 +23,7 @@ public class UserService {
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public void saveUser(User user) {
+    public void saveNewUser(User user) {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Arrays.asList("USER"));
@@ -31,6 +31,10 @@ public class UserService {
         } catch (Exception ex) {
             log.error("Exception: ", ex);
         }
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
     public List<User> getAll() {

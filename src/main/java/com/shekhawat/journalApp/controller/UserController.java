@@ -28,7 +28,7 @@ public class UserController {
         User userInDb = userService.findByUsername(username);
         userInDb.setUsername(user.getUsername());
         userInDb.setPassword(user.getPassword());
-        userService.saveUser(userInDb);
+        userService.saveNewUser(userInDb);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
