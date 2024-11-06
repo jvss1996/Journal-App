@@ -1,6 +1,5 @@
 package com.shekhawat.journalApp.service;
 
-import com.shekhawat.journalApp.entity.JournalEntry;
 import com.shekhawat.journalApp.entity.User;
 import com.shekhawat.journalApp.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,7 @@ public class UserService {
             user.setRoles(Arrays.asList("USER"));
             userRepository.save(user);
         } catch (Exception ex) {
-            log.error("Exception: ", ex);
+            log.error("Error occurred for {}", user.getUsername(), ex);
         }
     }
 
