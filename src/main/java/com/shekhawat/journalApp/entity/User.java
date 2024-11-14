@@ -1,5 +1,6 @@
 package com.shekhawat.journalApp.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -15,12 +16,15 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Document(collection = "users")
+@AllArgsConstructor
 public class User {
     @Id
     private ObjectId Id;
     @Indexed(unique = true)
     @NonNull
     private String username;
+    private String email;
+    private boolean sentimentAnalysis;
     @NonNull
     private String password;
     @DBRef
