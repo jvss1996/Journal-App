@@ -5,25 +5,6 @@ spring:
     allow-circular-references: true
   application:
     name: journalApp
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: test@gmail.com
-    password: qbpu uyui mnhd lbuw
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-#  data:
-#    mongodb:
-#      host: localhost
-#      port: 27017
 
 server:
   port: 8080
-
-weather:
-  api:
-    key: fe38c6bc79896fdea6881420a7d9341f

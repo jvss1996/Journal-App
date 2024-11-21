@@ -1,5 +1,6 @@
 package com.shekhawat.journalApp.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -11,12 +12,21 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
 
+    @Value("${spring.redis.clouduri}")
+    private String redisHost;
+
+    @Value("${spring.redis.cloudport}")
+    private int redisPort;
+
+    @Value("${spring.redis.cloudpassword}")
+    private String redisPassword;
+
     @Bean
     public JedisConnectionFactory connectionFactory() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-        configuration.setHostName("redis-17117.c305.ap-south-1-1.ec2.redns.redis-cloud.com");
-        configuration.setPort(17117);
-        configuration.setPassword("xxxx");
+        configuration.setHostName(redisHost);
+        configuration.setPort(redisPort);
+        configuration.setPassword(redisPassword);
         return new JedisConnectionFactory(configuration);
     }
 
