@@ -3,10 +3,12 @@ package com.shekhawat.journalApp.scheduler;
 import com.shekhawat.journalApp.cache.AppCache;
 import com.shekhawat.journalApp.entity.User;
 import com.shekhawat.journalApp.enums.Sentiment;
+import com.shekhawat.journalApp.model.SentimentData;
 import com.shekhawat.journalApp.repository.UserRepositoryImpl;
 import com.shekhawat.journalApp.service.EmailService;
 import com.shekhawat.journalApp.service.SentimentAnalysisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -20,16 +22,13 @@ import java.util.Map;
 public class UserScheduler {
 
     @Autowired
-    private EmailService emailService;
-
-    @Autowired
     private UserRepositoryImpl userRepository;
 
     @Autowired
-    private SentimentAnalysisService sentimentAnalysisService;
+    private AppCache appCache;
 
     @Autowired
-    private AppCache appCache;
+    private KafkaTemplate<String, SentimentData> kafkaTemplate;
 
     @Scheduled(cron = "0 0 9 * * SUN")
     public void fetchUsersAndSendEmails() {
@@ -51,7 +50,8 @@ public class UserScheduler {
                 }
             }
             if (maxSentiment != null) {
-                emailService.sendEmail(user.getEmail(), "Sentiment for last 7 days", maxSentiment.toString());
+                SentimentData sentimentData = SentimentData.builder().email(user.getEmail()).sentiment("Sentiment for last 7 days: " + maxSentiment).build();
+                kafkaTemplate.send("weekly_sentiments", sentimentData.getEmail(), sentimentData);
             }
         }
     }

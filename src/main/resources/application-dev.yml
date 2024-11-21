@@ -1,15 +1,74 @@
 spring:
+
+  ## EMAIL CONFIG ##
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jvss1996@gmail.com
+    password: qbpu uyui mnhd lbuw
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  ## REDIS CONFIG ##
+
   redis:
-#    host: localhost
-#    port: 6379
+  #    host: localhost
+  #    port: 6379
+    clouduri: redis-17117.c305.ap-south-1-1.ec2.redns.redis-cloud.com
+    cloudport: 17117
+    cloudpassword: BE41BfrZeGHYOwd13dagEkfpvAVGmeiG
+
+  ## MONGODB CONFIG ##
+
   data:
     mongodb:
+      #   host: localhost
+      #   port: 27017
       uri: mongodb+srv://jvss1996:N68jcdDWS3wcKHKf@cluster0.srpsu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database: journalApp
       auto-index-creation: true
+
+  ## KAFKA CONFIG ##
+
+  kafka:
+    properties:
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username='PFDUHMNN3N3WCGH5' password='dTgM+jHhtL2Jd6uU3/s+skVUZ6R65oy+DirmhzHDjvU7KbDvsjVJHTQXyTzZt4Mt';
+      security:
+        protocol: SASL_SSL
+      session:
+        timeout:
+          ms: 45000
+    bootstrap-servers: pkc-9q8rv.ap-south-2.aws.confluent.cloud:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: weekly-sentiment-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: com.shekhawat.journalApp.model
+
+client:
+  id: ccloud-springboot-client-a7d2fdd5-a1cd-42ed-9049-f74d2e5fc991
 
 logging:
   level:
     com:
       shekhawat:
         journalApp: ERROR
+
+weather:
+  api:
+    key: fe38c6bc79896fdea6881420a7d9341f
