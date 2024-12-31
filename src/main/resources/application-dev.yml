@@ -1,0 +1,74 @@
+spring:
+
+  ## EMAIL CONFIG ##
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GOOGLE_EMAIL}
+    password: ${GOOGLE_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  ## REDIS CONFIG ##
+
+  redis:
+    #    host: localhost
+    #    port: 6379
+    clouduri: ${REDIS_URI}
+    cloudport: 16006
+    cloudpassword: ${REDIS_PASSWORD}
+
+  ## MONGODB CONFIG ##
+
+  data:
+    mongodb:
+      #   host: localhost
+      #   port: 27017
+      uri: ${MONGO_URI}
+      database: journalApp
+      auto-index-creation: true
+
+  ## KAFKA CONFIG ##
+
+  kafka:
+    properties:
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username='${KAFKA_USERNAME}' password='${KAFKA_PASSWORD}';
+      security:
+        protocol: SASL_SSL
+      session:
+        timeout:
+          ms: 45000
+    bootstrap-servers: ${KAFKA_SERVER}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: weekly-sentiment-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: com.shekhawat.journalApp.model
+
+client:
+  id: ${SPRING_CLOUD_CLIENT}
+
+logging:
+  level:
+    com:
+      shekhawat:
+        journalApp: ERROR
+
+weather:
+  api:
+    key: ${WEATHER_API_KEY}
