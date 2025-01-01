@@ -5,6 +5,7 @@ import com.shekhawat.journalApp.repository.UserRepository;
 import com.shekhawat.journalApp.response.WeatherResponse;
 import com.shekhawat.journalApp.service.UserService;
 import com.shekhawat.journalApp.service.WeatherService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ public class UserController {
     private WeatherService weatherService;
 
     @PutMapping
+    @Operation(summary = "Update user")
     public ResponseEntity<?> updateUser(@RequestBody User user) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -40,6 +42,7 @@ public class UserController {
     }
 
     @DeleteMapping
+    @Operation(summary = "Delete user")
     public ResponseEntity<?> deleteUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         userRepository.deleteByUsername(authentication.getName());
@@ -47,6 +50,7 @@ public class UserController {
     }
 
     @GetMapping
+    @Operation(summary = "Get/Greet user")
     public ResponseEntity<?> greetUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();

@@ -1,9 +1,11 @@
 package com.shekhawat.journalApp.controller;
 
+import com.shekhawat.journalApp.dto.UserDTO;
 import com.shekhawat.journalApp.entity.User;
 import com.shekhawat.journalApp.service.UserDetailsServiceImpl;
 import com.shekhawat.journalApp.service.UserService;
 import com.shekhawat.journalApp.utils.JwtUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/public")
@@ -34,16 +34,24 @@ public class PublicController {
     private JwtUtil jwtUtil;
 
     @GetMapping("/health-check")
+    @Operation(summary = "Health check")
     public String healthCheck() {
         return "Ok";
     }
 
     @PostMapping("/signup")
-    public void signup(@RequestBody User user) {
-        userService.saveNewUser(user);
+    @Operation(summary = "Signup user")
+    public void signup(@RequestBody UserDTO userDTO) {
+        User newUser = new User();
+        newUser.setEmail(userDTO.getEmail());
+        newUser.setUsername(userDTO.getUsername());
+        newUser.setPassword(userDTO.getPassword());
+        newUser.setSentimentAnalysis(userDTO.isSentimentAnalysis());
+        userService.saveNewUser(newUser);
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Login user")
     public ResponseEntity<String> login(@RequestBody User user) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
