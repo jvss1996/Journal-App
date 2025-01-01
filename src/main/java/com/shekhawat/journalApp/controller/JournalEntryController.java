@@ -4,6 +4,7 @@ import com.shekhawat.journalApp.entity.JournalEntry;
 import com.shekhawat.journalApp.entity.User;
 import com.shekhawat.journalApp.service.JournalEntryService;
 import com.shekhawat.journalApp.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/journal")
+@Tag(name = "Journal APIs", description = "Create, read all, read by id, delete & update journal entry")
 public class JournalEntryController {
     @Autowired
     JournalEntryService journalEntryService;

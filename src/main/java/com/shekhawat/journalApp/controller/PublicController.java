@@ -4,6 +4,7 @@ import com.shekhawat.journalApp.entity.User;
 import com.shekhawat.journalApp.service.UserDetailsServiceImpl;
 import com.shekhawat.journalApp.service.UserService;
 import com.shekhawat.journalApp.utils.JwtUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/public")
 @Slf4j
+@Tag(name = "Public APIs", description = "Health check, signup & login")
 public class PublicController {
     @Autowired
     private UserService userService;
