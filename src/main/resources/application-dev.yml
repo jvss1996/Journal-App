@@ -60,6 +60,16 @@ spring:
             trusted:
               packages: com.shekhawat.journalApp.model
 
+  ## GOOGLE AUTH CONFIG ##
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_AUTH_CLIENT_ID}
+            client-secret: ${GOOGLE_AUTH_CLIENT_SECRET}
+
 client:
   id: ${SPRING_CLOUD_CLIENT}
 
